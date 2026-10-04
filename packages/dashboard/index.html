@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>my-office ダッシュボード</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='6' fill='%230a0f17'/%3E%3Cpath d='M12 4v16M4 12h16M6.5 6.5l11 11M17.5 6.5l-11 11' stroke='%235eead4' stroke-width='2'/%3E%3C/svg%3E" />
+    <script>
+      // 画面が出る前にテーマを決める(既定はダーク)
+      try {
+        var t = localStorage.getItem("my-office-dashboard:theme");
+        document.documentElement.dataset.theme = t === "light" ? "light" : "dark";
+      } catch (e) {
+        document.documentElement.dataset.theme = "dark";
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -98,3 +98,35 @@ Claude Code 用プラグイン「my-office」のリポジトリ。
   - 上部バー(LIVE・時計・数値タイル・24時間グラフ)/ オーナー → ショー → 部署の放射状の線 / 部署見出し(稼働数/全体)と担当カード / フォルダのチップ / 吹き出し / 右の縦並び枠 / 下の流れる活動ログ / 動きを止めるボタン
 - 他者のキャラクター画像と人物名は使わない。担当はイニシャルの丸アイコンで表す
 - 右の枠(写真では別のAI)は「提案待ちの部署」として使う
+
+## 2026-10-04 の追加決定
+
+- ダッシュボードの値: Lv は出さない。状態は最終更新10分以内=稼働中、24時間以内=最近、それ以外=待機。吹き出し=最後に更新されたファイルの見出し。納品=status が completed/published/delivered/paid の最新ファイル。見出しの a/b=進行中の件数/ファイル数。天気は出さない。MCP の箱は案内のみ
+- B-1 部署を作ったら、秘書室のメモは部署へ書き写し、元のメモの設定欄に `status: moved` と `moved_to` を付ける(集計から除く)
+- B-2 その日最初の会話で、前回のやり残し TODO を引き継ぐか聞く。引き継いだ行の末尾に `| 繰越: 元の日付`
+- B-3 担当キャラの画像は `my-office/_assets/<部署フォルダ>.png|jpg|webp`(任意)
+- B-4 部署の提案メモ `secretary/notes/department-proposals.md`(「## 依頼の記録」「## 提案の記録」、行は `- YYYY-MM-DD HH:MM | 部署フォルダ | 内容`)
+- 名前が `_` で始まるファイルとフォルダは集計しない
+- オーナーの指示「できるところは全部進める」を受け、仕様に名前のある依存(vitest、VitePress、Express、React、Vite など)は開発用として追加してよいことにした。GitHub のリポジトリ作成・push と npm 公開は、引き続き手順を示して承認を得てから
+- vitepress 1.6.4 に npm audit の警告あり(開発サーバー用の esbuild。本番のサイトには影響しない)
+
+## MCP の公式手順(2026-10-04 確認)
+
+- Claude Code: `claude mcp add --transport http <名前> <URL>`、ヘッダーは `--header`、OAuth は `/mcp`、スコープは local/project/user(https://code.claude.com/docs/en/mcp)
+- claude.ai のコネクタは、claude.ai アカウントでログインした Claude Code で自動的に使える
+- Notion: `claude mcp add --transport http notion https://mcp.notion.com/mcp`(https://developers.notion.com/guides/mcp/)
+- GitHub: `claude mcp add-json github '{"type":"http","url":"https://api.githubcopilot.com/mcp","headers":{"Authorization":"Bearer YOUR_GITHUB_PAT"}}'`(github/github-mcp-server の install-claude.md)
+- Slack: `/plugin install slack`(https://docs.slack.dev/ai/slack-mcp-server/connect-to-claude/)
+- Google カレンダー: Claude Code 向けの公式コマンドは確認できず。claude.ai のコネクタで追加する案内のみ載せる
+- お手本の MCP コマンド(@cocal/google-calendar-mcp、Slack の clientId 埋め込みなど)は使わない
+
+## ダッシュボード(段階7、2026-10-05)
+
+- `packages/dashboard/`(npm パッケージ `my-office-dashboard` 0.1.0、bin も同名、既定ポート 8739、127.0.0.1 のみで待ち受け、読み取り専用)
+- 依存: express 5、chokidar 4、gray-matter 4、open 10、react 19、react-markdown 10、remark-gfm 4(表とチェックボックスの表示用に追加)。開発用: vite 8、@vitejs/plugin-react 6
+- chokidar 5 と open 11 は Node 20 以上が必要なので使わない(engines は node>=18)
+- 組織フォルダの判定: `my-office/CLAUDE.md` に「## オーナープロフィール」があるもの(このリポジトリの CLAUDE.md を誤認しないため)
+- 部署のファイル数は .md だけを数える。吹き出しは24時間以内に動いた部署から新しい順に最大4つ
+- オーナーの画像は `_assets/owner.png`
+- テストはルートの vitest で実行(`npx vitest run`)。CI では `npm ci --prefix packages/dashboard` も行う
+- 初回セットアップの質問4(ダッシュボードを使うか)を追加し、完了メッセージとテキスト版ダッシュボードに `npx my-office-dashboard` の案内を入れた(npm 公開後に使える)
