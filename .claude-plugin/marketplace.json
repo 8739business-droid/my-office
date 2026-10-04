@@ -1,0 +1,23 @@
+{
+  "name": "my-office-marketplace",
+  "owner": {
+    "name": "8739business-droid"
+  },
+  "metadata": {
+    "description": "秘書ショーが窓口になる仮想オフィスのプラグイン集"
+  },
+  "plugins": [
+    {
+      "name": "my-office",
+      "source": "./plugins/my-office",
+      "description": "大阪弁の秘書ショーが窓口になり、仕事に合わせて部署が増えていく仮想オフィス。",
+      "author": {
+        "name": "8739business-droid"
+      },
+      "repository": "https://github.com/8739business-droid/my-office",
+      "license": "MIT",
+      "category": "productivity",
+      "tags": ["office", "secretary", "organization", "todo", "productivity"]
+    }
+  ]
+}

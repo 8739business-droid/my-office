@@ -1,0 +1,16 @@
+# お手本(clone したもの。コミットしない)
+.reference/
+
+# Claude Code のローカル設定
+.claude/
+
+# 組織データ(リポジトリ直下だけ。plugins/my-office/ を巻き込まないよう先頭に / を付ける)
+/my-office/
+
+# 依存パッケージ
+node_modules/
+
+# ビルド生成物
+docs/.vitepress/cache/
+docs/.vitepress/dist/
+packages/dashboard/dist/
