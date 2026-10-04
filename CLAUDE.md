@@ -130,3 +130,10 @@ Claude Code 用プラグイン「my-office」のリポジトリ。
 - オーナーの画像は `_assets/owner.png`
 - テストはルートの vitest で実行(`npx vitest run`)。CI では `npm ci --prefix packages/dashboard` も行う
 - 初回セットアップの質問4(ダッシュボードを使うか)を追加し、完了メッセージとテキスト版ダッシュボードに `npx my-office-dashboard` の案内を入れた(npm 公開後に使える)
+
+## 公開(2026-10-05)
+
+- GitHub: https://github.com/8739business-droid/my-office(public、main ブランチ)
+- マニュアル: https://8739business-droid.github.io/my-office/(GitHub Pages、Actions から公開。push のたびにテスト → ビルド → 公開)
+- GitHub からのインストールを確認済み(`/plugin marketplace add 8739business-droid/my-office` → `/plugin install my-office@my-office-marketplace`、version 0.1.0)
+- lockfile の注意: npm 11 は vite 8 の任意 peer の esbuild を余分に入れ、Linux の `npm ci` が EBADPLATFORM で失敗する。依存を変えたら `npm prune` してから lockfile をコミットする
